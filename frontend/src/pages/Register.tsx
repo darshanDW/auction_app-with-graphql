@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { CreateUser } from '../graphql/Mutation';
 import { useContext } from 'react';
-import { AuthContext } from '../component/Authprovider'; 
+import { AuthContext } from '../component/Authprovider';
 import { useNavigate } from 'react-router-dom';
+import  '../App.css';
 const Register = () => {
-    const Navigate=useNavigate()
-    useEffect(()=>{
-const token=localStorage.getItem("authToken")
-if(token){
-    // Navigate("/")
-}
-    },[])
-    const xstate=useContext(AuthContext)
-    const {userLogin,setuserLogin}:any=xstate
+  const Navigate = useNavigate()
+  useEffect(() => {
+    const token = localStorage.getItem("authToken")
+    if (token) {
+     // Navigate("/all_auction")
+    }
+  }, [])
+  const xstate = useContext(AuthContext)
+  const { userLogin, setuserLogin }: any = xstate
   const [createUser, { data, error, loading }] = useMutation(CreateUser);
 
   // Use useState to store form data
@@ -41,13 +42,16 @@ if(token){
     } catch (err: any) {
       console.error('Error creating user:', err.message);
     }
-  };
+  }; <big></big>
 
   useEffect(() => {
     if (data) {
       console.log('Mutation response data:', data.createUser.token);
       localStorage.setItem("authToken", data.createUser.token);
-setuserLogin(true)
+
+      setuserLogin(true)
+      Navigate("/all_auction");
+
     }
 
     if (error) {
